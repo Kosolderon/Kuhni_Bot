@@ -41,10 +41,7 @@ def collect_answers(message):
         bot.send_message(chat_id, questions[step][1])
     else:
         json_result = json.dumps(user_data[chat_id]["answers"], indent=2, ensure_ascii=False)
-        bot.send_message(chat_id, "Готово! Вот ваш JSON:")
-        bot.send_message(chat_id, f"```json
-{json_result}
-```", parse_mode="Markdown")
+        bot.send_message(chat_id, f"```json\n{json_result}\n```", parse_mode="Markdown")
         del user_data[chat_id]
 
 bot.polling()
