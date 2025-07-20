@@ -17,8 +17,25 @@ questions = [
     ("budget", "Примерный бюджет (например, 350000-500000):")
 ]
 
-@bot.message_handler(commands=["start"])
-def start(message):
+from telebot import types
+
+@bot.message_handler(commands=['start'])
+def handle_start(message):
+    chat_id = message.chat.id
+    user_data[chat_id] = {"step": "layout", "answers": {}}
+
+    # Отправляем изображение с планировками
+    try:
+        photo = open("layout_options.jpg", "rb")
+        bot.send_photo(chat_id, photo, caption="Выберите подходящую планировку кухни:")
+    except Exception as e:
+        bot.send_message(chat_id, "⚠️ Не удалось загрузить изображение планировок.")
+        print(f"Ошибка загрузки фото: {e}")
+
+    # Кнопки выбора
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    markup.add("Прямая", "Г-образная", "П-образная")
+    bot.send_message(chat_id, "Какая у вас планировка кухни?", reply_markup=markup)
     chat_id = message.chat.id
     user_data[chat_id] = {"step": 0, "answers": {}}
     bot.send_message(chat_id, "Привет! Давайте соберём параметры вашей кухни.")
