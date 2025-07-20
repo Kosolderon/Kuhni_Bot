@@ -27,7 +27,7 @@ def handle_start(message):
 
     # 2. Отправляем изображение с планировками
     try:
-        photo = open("layout_options.jpg", "rb")
+        photo = open("layout_options.png", "rb")
         bot.send_photo(chat_id, photo, caption="Ниже представлены три типа планировки кухни:")
     except Exception as e:
         bot.send_message(chat_id, "⚠️ Не удалось загрузить изображение планировок.")
